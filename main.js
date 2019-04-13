@@ -5,7 +5,7 @@ function login(username, password){
     $.ajax({
         url : "https://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/login-session",
         type : "POST",
-        data : { "username" : username, "password" : password },
+        data : JSON.stringify({ "username" : username, "password" : password }),
         contentType : "application/json",
         success : function(data){
             console.log(data);
@@ -27,7 +27,7 @@ function send_message(topic, message){
     $.ajax({
         url : "https://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message",
         type : "POST",
-        data : {"text" : message,"key" : topic,"token" : token},
+        data : JSON.stringify({"text" : message,"key" : topic,"token" : token}),
         contentType : "application/json",
         success : function(data){
             console.log(data);
