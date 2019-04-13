@@ -1,0 +1,76 @@
+var token = "";
+
+function login(username, password){
+    $.post( "http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/login-session", { "username" : username, "password" : password }, function(data){
+        console.log(data["token"]);
+        token = data["token"];
+        return data["token"];
+    });
+}
+
+function send_message(topic, message){
+    $.post("http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message", {
+        "text" : message,
+        "key" : topic,
+        "token" : token
+    }, function(data){
+        console.log(data);
+    });
+}
+
+
+function get_messages(topic, from_time){
+    $.get("http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message?token=" + token + "&key=" + topic + "&from_time=" + from_time, function(data){
+        console.log(data);
+        send_messages(data);
+    });
+}
+
+
+function listen_messages(topic, from_time){
+    setInterval(get_message(topic, from_time), 500);
+}
+
+
+
+
+function set_messages(messages){
+
+    var msg_txt = "";
+
+    for (var i in messages){
+        item = messages[i]
+        tmp = `<div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            `+ item["topic"] +`
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            `+item["message"]+`
+                        </div>
+                    </div>
+                </div>
+                <br>`
+        msg_txt += tmp
+    }
+
+    $("#messages").html(msg_txt);
+}
+
+
+
+
+var messages = [
+    {"topic" : "topic1", "message" : "message 1"},
+    {"topic" : "topic2", "message" : "message 2"},
+];
+
+login("mridulganga", "password123")
+var d = new Date();
+listen_messages("main.child.topic1", d.toISOString().replace("T"," "));
+
+// set_messages(messages);
+
+

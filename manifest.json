@@ -1,0 +1,13 @@
+{
+    "name": "Mview",
+    "short_name": "MView",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "A simple message viewing app",
+    "icons": [{
+      "src": "",
+      "sizes": "",
+      "type": "image/png"
+    }]
+  }
