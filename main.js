@@ -47,7 +47,7 @@ function send_message(topic, message){
 function get_messages(topic, from_time){
     $.get("https://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message?token=" + token + "&key=" + topic + "&from_time=" + from_time, function(data){
         console.log(data);
-        send_messages(data);
+        set_messages(data);
     });
 }
 
