@@ -53,7 +53,9 @@ function get_messages(topic, from_time){
 
 
 function listen_messages(topic, from_time){
-    setInterval(get_messages(topic, from_time), 500);
+    setInterval(function(){
+        get_messages(topic, from_time)
+    }, 500);
 }
 
 
