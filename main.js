@@ -1,4 +1,5 @@
 var token = "";
+var topic = "main.child.topic1";
 
 function login(username, password){
     var d = new Date();
@@ -10,7 +11,7 @@ function login(username, password){
         success : function(data){
             console.log(data);
             token = data["token"];
-            listen_messages("main.child.topic1", d.toISOString().replace("T"," ").replace("Z",""));
+            listen_messages( d.toISOString().replace("T"," ").replace("Z",""));
         },
         error : function(err){
             console.log(err);
@@ -23,11 +24,11 @@ function login(username, password){
     // });
 }
 
-function send_message(topic, message){
+function send_message(wtopic, message){
     $.ajax({
         url : "https://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message",
         type : "POST",
-        data : JSON.stringify({"text" : message,"key" : topic,"token" : token}),
+        data : JSON.stringify({"text" : message,"key" : wtopic,"token" : token}),
         contentType : "application/json",
         success : function(data){
             console.log(data);
@@ -44,7 +45,7 @@ function send_message(topic, message){
 }
 
 
-function get_messages(topic, from_time){
+function get_messages(from_time){
     $.get("https://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message?token=" + token + "&key=" + topic + "&from_time=" + from_time, function(data){
         console.log(data);
         set_messages(data);
@@ -52,9 +53,9 @@ function get_messages(topic, from_time){
 }
 
 
-function listen_messages(topic, from_time){
+function listen_messages(from_time){
     setInterval(function(){
-        get_messages(topic, from_time)
+        get_messages(from_time);
     }, 500);
 }
 
@@ -87,7 +88,15 @@ function set_messages(messages){
 }
 
 
+$("#publish").click(function(){
+    var wtopic = $("#topic").val();
+    var message = $("#message").val();
+    send_message(wtopic, message);
+});
 
+$("#listen_btn").click(function(){
+    topic = $("#listen_at").val();
+})  
 
 var messages = [
     {"topic" : "topic1", "message" : "message 1"},
