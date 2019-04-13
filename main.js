@@ -70,12 +70,12 @@ function set_messages(messages){
         tmp = `<div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
-                            `+ item["topic"] +`
+                            `+ item["key"] +`
                         </p>
                     </header>
                     <div class="card-content">
                         <div class="content">
-                            `+item["message"]+`
+                            `+item["text"]+`
                         </div>
                     </div>
                 </div>
