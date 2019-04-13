@@ -1,21 +1,44 @@
 var token = "";
 
 function login(username, password){
-    $.post( "http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/login-session", { "username" : username, "password" : password }, function(data){
-        console.log(data["token"]);
-        token = data["token"];
-        return data["token"];
+    $.ajax({
+        url : "http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/login-session",
+        type : "POST",
+        data : { "username" : username, "password" : password },
+        contentType : "application/json",
+        success : function(data){
+            console.log(data);
+            token = data["token"];
+        },
+        error : function(err){
+            console.log(err);
+        }
     });
+    // $.post( "http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/login-session", { "username" : username, "password" : password }, function(data){
+    //     console.log(data["token"]);
+    //     token = data["token"];
+    //     return data["token"];
+    // });
 }
 
 function send_message(topic, message){
-    $.post("http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message", {
-        "text" : message,
-        "key" : topic,
-        "token" : token
-    }, function(data){
-        console.log(data);
+    $.ajax({
+        url : "http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message",
+        type : "POST",
+        data : {"text" : message,"key" : topic,"token" : token},
+        contentType : "application/json",
+        success : function(data){
+            console.log(data);
+        }
     });
+
+    // $.post("http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message", {
+    //     "text" : message,
+    //     "key" : topic,
+    //     "token" : token
+    // }, function(data){
+    //     console.log(data);
+    // });
 }
 
 
