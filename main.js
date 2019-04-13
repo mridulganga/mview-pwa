@@ -10,7 +10,7 @@ function login(username, password){
         success : function(data){
             console.log(data);
             token = data["token"];
-            listen_messages("main.child.topic1", d.toISOString().replace("T"," "));
+            listen_messages("main.child.topic1", d.toISOString().replace("T"," ").replace("Z",""));
         },
         error : function(err){
             console.log(err);
