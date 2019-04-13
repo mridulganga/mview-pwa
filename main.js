@@ -1,14 +1,16 @@
 var token = "";
 
 function login(username, password){
+    var d = new Date();
     $.ajax({
-        url : "http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/login-session",
+        url : "https://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/login-session",
         type : "POST",
         data : { "username" : username, "password" : password },
         contentType : "application/json",
         success : function(data){
             console.log(data);
             token = data["token"];
+            listen_messages("main.child.topic1", d.toISOString().replace("T"," "));
         },
         error : function(err){
             console.log(err);
@@ -23,7 +25,7 @@ function login(username, password){
 
 function send_message(topic, message){
     $.ajax({
-        url : "http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message",
+        url : "https://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message",
         type : "POST",
         data : {"text" : message,"key" : topic,"token" : token},
         contentType : "application/json",
@@ -43,7 +45,7 @@ function send_message(topic, message){
 
 
 function get_messages(topic, from_time){
-    $.get("http://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message?token=" + token + "&key=" + topic + "&from_time=" + from_time, function(data){
+    $.get("https://sample-test-sample-app.1d35.starter-us-east-1.openshiftapps.com/message?token=" + token + "&key=" + topic + "&from_time=" + from_time, function(data){
         console.log(data);
         send_messages(data);
     });
@@ -91,9 +93,5 @@ var messages = [
 ];
 
 login("mridulganga", "password123")
-var d = new Date();
-listen_messages("main.child.topic1", d.toISOString().replace("T"," "));
-
-// set_messages(messages);
 
 
